@@ -1,0 +1,7 @@
+python_version = "3.12"
+
+site_package_paths = [
+    "apps/golf-api/src",
+    "apps/handicap-calculator/src",
+]
+
