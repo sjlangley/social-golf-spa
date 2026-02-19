@@ -5,8 +5,12 @@ import jsxA11y from 'eslint-plugin-jsx-a11y';
 
 const reactRecommendedRules = eslintPluginReact.configs?.recommended?.rules ?? {};
 const jsxA11yRecommendedRules = jsxA11y.configs?.recommended?.rules ?? {};
-const tsRecommendedRules = (tseslint.configs?.recommended ?? []).reduce(
-  (rules, config) => ({ ...rules, ...(config.rules ?? {}) }),
+const tsRecommendedConfigsRaw = tseslint.configs?.recommended ?? [];
+const tsRecommendedConfigs = Array.isArray(tsRecommendedConfigsRaw)
+  ? tsRecommendedConfigsRaw
+  : [tsRecommendedConfigsRaw];
+const tsRecommendedRules = tsRecommendedConfigs.reduce(
+  (rules, config) => ({ ...rules, ...(config?.rules ?? {}) }),
   {}
 );
 
