@@ -14,8 +14,7 @@
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
     "allowSyntheticDefaultImports": true,
-    "declaration": true,
-    "declarationMap": true,
+
     "sourceMap": true,
     "paths": {
       "@/*": ["./src/*"]
