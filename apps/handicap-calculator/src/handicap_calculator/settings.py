@@ -7,7 +7,7 @@ file.
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-from golf_api.enums import Environment
+from handicap_calculator.enums import Environment
 
 
 class Settings(BaseSettings):
