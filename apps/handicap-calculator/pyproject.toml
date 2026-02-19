@@ -3,9 +3,9 @@ requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "golf-api"
+name = "handicap-calculator"
 version = "0.0.0"
-description = "API for social golf service."
+description = "Push subscriber for score events to update handicaps."
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
@@ -26,7 +26,7 @@ license = {text = "Apache 2.0"}
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
+    "License :: OSI Approved :: Apache Software License",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.12",
 ]
@@ -55,7 +55,7 @@ where = ["src"]
 
 [tool.pytest.ini_options]
 minversion = "6.0"
-addopts = "-ra -q --cov=golf_api --cov-report=term-missing --cov-report=xml --cov-fail-under=80 --show-capture=all"
+addopts = "-ra -q --cov=handicap_calculator --cov-report=term-missing --cov-report=xml --cov-fail-under=80 --show-capture=all"
 testpaths = ["tests"]
 timeout = 15
 timeout_method = "thread"
@@ -66,5 +66,5 @@ log_level = "INFO"
 FIRESTORE_EMULATOR_HOST = 'localhost:8081'
 
 [tool.coverage.run]
-source = ["golf_api"]
+source = ["handicap_calculator"]
 omit = ["tests/*", "*/venv/*", "*/__pycache__/*"]
