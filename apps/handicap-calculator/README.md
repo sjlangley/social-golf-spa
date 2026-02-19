@@ -402,7 +402,7 @@ def test_calculate_handicap_with_zero_scores():
 ruff check apps/handicap-calculator/src/
 
 # Format code
-ruff format apps/golf-api/src/
+ruff format apps/handicap-calculator/src/
 
 # Type checking
 pyrefly check src/
