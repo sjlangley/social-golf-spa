@@ -417,7 +417,7 @@ Configuration in `ruff.toml` (root):
 
 Config lint/format before committing:
 ```bash
-# From apps/golf-api
+# From apps/handicap-calculator
 ruff check src/ && ruff format src/ && pyrefly check src/
 ```
 
