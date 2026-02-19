@@ -1,0 +1,69 @@
+name: Golf API Docker Build
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'apps/golf-api/**'
+      - '!apps/golf-api/*.md'
+      - '!apps/golf-api/**/*.md'
+      - '.github/workflows/golf-api-docker-build.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'apps/golf-api/**'
+      - '!apps/golf-api/*.md'
+      - '!apps/golf-api/**/*.md'
+      - '.github/workflows/golf-api-docker-build.yml'
+
+jobs:
+  docker-build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    defaults:
+      run:
+        working-directory: apps/golf-api
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t golf-api:test .
+
+      - name: Run Docker container
+        run: |
+          docker run -d --name golf-api-test \
+            -p 8080:8080 \
+            -e FIRESTORE_EMULATOR_HOST=localhost:8081 \
+            -e FIRESTORE_PROJECT_ID=test-project \
+            golf-api:test
+
+      - name: Wait for application to start and check health
+        run: |
+          echo "Waiting for application to start..."
+          max_attempts=30
+          attempt=0
+          while [ $attempt -lt $max_attempts ]; do
+            if curl -f -s --max-time 10 http://localhost:8080/health > /dev/null 2>&1; then
+              echo "Application is healthy!"
+              response=$(curl -f -s --max-time 10 http://localhost:8080/health)
+              echo "Health check response: $response"
+              exit 0
+            fi
+            attempt=$((attempt + 1))
+            echo "Attempt $attempt/$max_attempts: Application not ready yet..."
+            sleep 1
+          done
+          echo "Health check failed: Application did not become healthy within 30 seconds"
+          exit 1
+
+      - name: Check container logs
+        if: always()
+        run: docker logs golf-api-test
+
+      - name: Stop container
+        if: always()
+        run: docker stop golf-api-test && docker rm golf-api-test
