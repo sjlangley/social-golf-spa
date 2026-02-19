@@ -11,10 +11,12 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html', 'lcov'],
+      include: ['src/**/*.{ts,tsx}'],
       exclude: [
         'node_modules/',
         'dist/',
         'tests/',
+        'src/main.tsx',
         '**/*.test.ts',
         '**/*.test.tsx',
       ],

@@ -1,6 +1,5 @@
 import './App.css';
 
-
 function App(): React.ReactElement {
   return (
     <div className="min-h-screen flex flex-col font-sans bg-gray-100">
@@ -21,8 +20,6 @@ function App(): React.ReactElement {
             <ul className="list-disc list-inside space-y-1">
               <li>React 19 with TypeScript</li>
               <li>Vite for fast development</li>
-              <li>TanStack Query for API data fetching</li>
-              <li>Google OAuth 2.0 integration</li>
               <li>Vitest for unit testing</li>
               <li>ESLint + Prettier code quality</li>
               <li>Tailwind CSS for rapid UI styling</li>

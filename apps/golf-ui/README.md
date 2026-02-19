@@ -87,7 +87,7 @@ vitest.config.ts    # Vitest configuration
 - **tsconfig.json** – TypeScript compiler options (strict mode enabled)
 - **.env.example** – Environment variables template
 - **.gitignore** – Git ignore patterns
-- **eslintrc.config.js** – ESLint rules (Google TS style)
+- **eslint.config.js** – ESLint rules (Google TS style)
 - **.prettierrc** – Prettier formatting config
 - **vite.config.ts** – Vite build tool config
 - **vitest.config.ts** – Vitest testing framework config
