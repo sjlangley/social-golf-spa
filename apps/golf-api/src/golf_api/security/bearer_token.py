@@ -32,7 +32,7 @@ async def verify_bearer_token(token: str) -> User:
             audience=settings.client_id,
         )
     except exceptions.GoogleAuthError as e:
-        logger.error('If the issuer is invalid -> %s', e)
+        logger.error('Invalid issuer in Google ID token: %s', e)
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, detail='Invalid issuer'
         ) from e
