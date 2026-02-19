@@ -593,7 +593,7 @@ gcloud logging read "resource.type=cloud_run_revision AND resource.labels.servic
 1. Create feature branch: `git checkout -b feature/description`
 2. Make changes and write tests
 3. Run linting: `ruff check src/ && ruff format src/`
-4. Run tests: `pytest --cov=golf_api`
+4. Run tests: `pytest --cov=handicap_calculator`
 5. Commit: `git commit -m "feat: description"`
 6. Push: `git push origin feature/description`
 7. Create Pull Request
