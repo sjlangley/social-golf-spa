@@ -1,6 +1,6 @@
 import './App.css';
 
-function App(): React.ReactElement {
+export function App(): React.ReactElement {
   return (
     <div className="min-h-screen flex flex-col font-sans bg-gray-100">
       <header className="bg-slate-800 text-white p-8 text-center shadow-md">
@@ -30,5 +30,3 @@ function App(): React.ReactElement {
     </div>
   );
 }
-
-export default App;
