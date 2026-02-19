@@ -399,7 +399,7 @@ def test_calculate_handicap_with_zero_scores():
 
 ```bash
 # Check code style (from root directory)
-ruff check apps/golf-api/src/
+ruff check apps/handicap-calculator/src/
 
 # Format code
 ruff format apps/golf-api/src/
