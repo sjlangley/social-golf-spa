@@ -19,8 +19,8 @@ if settings.client_origins:
         CORSMiddleware,
         allow_origins=settings.client_origins,
         allow_credentials=False,
-        allow_methods=['*'],
-        allow_headers=['*'],
+        allow_methods=['GET', 'POST'],
+        allow_headers=['Content-Type', 'Authorization'],
     )
 
 app.include_router(health.router, prefix='/health')

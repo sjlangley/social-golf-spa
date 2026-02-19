@@ -4,7 +4,7 @@ exclude = ["CHANGELOG.md"]
 
 [lint]
 select = ["A", "B", "C", "E", "F", "I", "PT", "ASYNC"]
-ignore = ["B008", "C901", "E501"]
+ignore = ["B008", "C901"]
 
 [lint.flake8-quotes]
 inline-quotes = "single"
