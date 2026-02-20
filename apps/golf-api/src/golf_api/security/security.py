@@ -18,7 +18,7 @@ _AUTH_BYPASS_ALLOWED_ENVS = {Environment.LOCAL}
 
 
 async def get_current_user(
-    token: HTTPAuthorizationCredentials = Depends(security),
+    token: HTTPAuthorizationCredentials | None = Depends(security),
 ) -> User:
     # Provide a special environment variable to bypass bearer token
     # verification for local development and testing.
