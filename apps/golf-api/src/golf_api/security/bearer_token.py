@@ -3,6 +3,7 @@
 import asyncio
 from functools import lru_cache
 import logging
+from typing import Any
 
 import cachecontrol
 from fastapi import HTTPException, status
@@ -19,7 +20,7 @@ logger = logging.getLogger(__name__)
 
 @lru_cache(maxsize=1)
 def get_google_request():
-    session = requests.Session()
+    session: Any = requests.Session()
     cached_session = cachecontrol.CacheControl(session)
     return google_requests.Request(session=cached_session)
 
