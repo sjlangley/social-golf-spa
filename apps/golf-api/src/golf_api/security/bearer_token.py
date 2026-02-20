@@ -37,7 +37,8 @@ async def verify_bearer_token(token: str) -> User:
     except exceptions.GoogleAuthError as e:
         logger.error('Google ID token verification failed', exc_info=e)
         raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED, detail='Authentication failed'
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail='Authentication failed',
         ) from e
     except ValueError as e:
         logger.info('Bearer token verification failed: %s', e)
