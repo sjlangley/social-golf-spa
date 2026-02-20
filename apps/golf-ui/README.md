@@ -34,8 +34,11 @@ Builds optimized production bundle to `dist/`
 ### Testing
 
 ```bash
+# Run tests once
+npm test
+
 # Run tests in watch mode
-npm run test
+npm run test:watch
 
 # Run tests once with coverage
 npm run test:ci
@@ -79,6 +82,31 @@ package.json        # Dependencies and scripts
 tsconfig.json       # TypeScript configuration
 vite.config.ts      # Vite configuration
 vitest.config.ts    # Vitest configuration
+```
+
+## Before Committing (REQUIRED)
+
+**⚠️ All checks must pass before committing. CI will fail if you skip these steps.**
+
+Run these commands in order from `apps/golf-ui/`:
+
+```bash
+# 1. Check linting
+npm run lint
+
+# 2. Check formatting (or use npm run format to auto-fix)
+npm run format:check
+
+# 3. Run tests
+npm test
+```
+
+**All checks must pass before you can commit.**
+
+To auto-fix issues:
+```bash
+npm run lint:fix  # Fix linting issues
+npm run format    # Fix formatting issues
 ```
 
 ## Configuration Files

@@ -691,10 +691,32 @@ If you encounter any of these situations, **stop and ask for clarification**:
 
 **Don't guess or assume** - ping the team for clarification. It's faster than refactoring later.
 
+## Pre-Commit Checklist (MANDATORY)
+
+**⚠️ CRITICAL: Always run these checks before committing code. CI will fail otherwise.**
+
+### Backend (Python - apps/golf-api or apps/handicap-calculator)
+```bash
+ruff format .                              # Format code
+ruff check .                               # Lint code
+pyright .                                  # Type check
+pytest --cov=src/[package] --cov-fail-under=80  # Test with 80% coverage
+```
+
+### Frontend (TypeScript - apps/golf-ui)
+```bash
+npm run lint                               # Lint code
+npm run format:check                       # Check formatting (or npm run format to fix)
+npm test                                   # Run tests
+```
+
+**Never commit code without passing all checks. This is not optional.**
+
 ## Code Review Standards
 
 When reviewing code (or generating code):
 
+- **Pre-commit checks passed** - All linting, formatting, type checking, and tests must pass
 - **Working code only** - No placeholder functions or TODOs
 - **Type safety** - All TypeScript/Python code is fully typed
 - **Error handling** - All error cases are handled gracefully

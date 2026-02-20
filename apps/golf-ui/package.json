@@ -11,7 +11,8 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write src tests",
     "format:check": "prettier --check src tests",
-    "test": "vitest",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "test:ci": "vitest run --coverage",
     "test:ui": "vitest --ui --coverage"
   },

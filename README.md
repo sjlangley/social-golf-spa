@@ -378,12 +378,18 @@ See [docs/architecture.md](docs/architecture.md) for detailed deployment instruc
    cd apps/golf-api
    ruff check . && ruff format .
    pyright .
-   pytest --cov=app --cov-fail-under=80
+   pytest --cov=src/golf_api --cov-fail-under=80
    ```
 
    ```bash
    # Frontend example
    cd apps/golf-ui
+   npm run lint
+   npm run format:check  # Or npm run format to auto-fix
+   npm test
+   ```
+
+   **⚠️ CRITICAL: Never commit without running these checks. CI will fail otherwise.**
 
 4. **Use conventional commit syntax:**
    ```
