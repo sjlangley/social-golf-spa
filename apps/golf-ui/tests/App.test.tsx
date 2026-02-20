@@ -28,4 +28,11 @@ describe('App', () => {
     const welcomeMessage = screen.getByText(/minimal React 19 \+ TypeScript \+ Vite application/i);
     expect(welcomeMessage).toBeDefined();
   });
+
+  it('renders login section when logged out', () => {
+    // Google Identity Services will render the button at runtime
+    // In the test environment, we just verify the container and heading exist
+    const loginHeading = screen.getByRole('heading', { name: /login/i });
+    expect(loginHeading).toBeDefined();
+  });
 });

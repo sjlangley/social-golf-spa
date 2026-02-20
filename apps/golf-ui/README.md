@@ -34,8 +34,11 @@ Builds optimized production bundle to `dist/`
 ### Testing
 
 ```bash
+# Run tests once
+npm test
+
 # Run tests in watch mode
-npm run test
+npm run test:watch
 
 # Run tests once with coverage
 npm run test:ci
