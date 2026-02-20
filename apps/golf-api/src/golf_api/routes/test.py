@@ -10,11 +10,11 @@ router = APIRouter()
 
 @router.get(
     '',
-    response_description='Return HTTP Status Code 200 (OK)',
+    response_description='Return the currently authenticated user',
     status_code=status.HTTP_200_OK,
     response_model=User,
     include_in_schema=False,
 )
-async def get_health(current_user: User = Depends(get_current_user)) -> User:
-    """Perform a health check and return the service status."""
+async def get_current_user_test(current_user: User = Depends(get_current_user)) -> User:
+    """Return the currently authenticated user for test purposes."""
     return current_user
