@@ -35,8 +35,8 @@ async def async_test_client():
 
 @pytest.fixture
 def override_bearer_token_dependency(test_user):
-    # Override the verify_api_key dependency for the test, and inject a user
-    # with limited permissions (not admin)
+    # Override the get_current_user dependency for the test and inject the
+    # test_user instance as the authenticated user.
     def override_get_current_user() -> User:
         return test_user
 
