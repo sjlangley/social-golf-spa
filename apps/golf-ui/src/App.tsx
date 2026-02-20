@@ -101,13 +101,6 @@ function getApiUrl(pathname: string): string {
   return new URL(pathname, baseUrl).toString();
 }
 
-function maskToken(token: string): string {
-  if (token.length <= 16) {
-    return '***';
-  }
-  return `${token.slice(0, 8)}…${token.slice(-8)}`;
-}
-
 function isBackendUser(value: unknown): value is BackendUser {
   if (typeof value !== 'object' || value === null) {
     return false;
@@ -162,12 +155,6 @@ export function App(): React.ReactElement {
       setBackendError(null);
 
       try {
-        console.log('[auth] Fetching current user from backend', {
-          url,
-          hasToken: true,
-          tokenPreview: maskToken(token),
-        });
-
         const response = await fetch(url, {
           method: 'GET',
           headers: {
@@ -178,12 +165,6 @@ export function App(): React.ReactElement {
 
         const responseText = await response.text();
         if (!response.ok) {
-          console.error('[auth] Backend /api/test failed', {
-            url,
-            status: response.status,
-            statusText: response.statusText,
-            responseText,
-          });
           setCurrentUser(null);
           setBackendError({
             url,
@@ -197,13 +178,7 @@ export function App(): React.ReactElement {
         let parsed: unknown;
         try {
           parsed = JSON.parse(responseText);
-        } catch (parseError) {
-          const message = parseError instanceof Error ? parseError.message : String(parseError);
-          console.error('[auth] Failed to parse backend response as JSON', {
-            url,
-            responseText,
-            parseError: message,
-          });
+        } catch {
           setCurrentUser(null);
           setBackendError({
             url,
@@ -215,10 +190,6 @@ export function App(): React.ReactElement {
         }
 
         if (!isBackendUser(parsed)) {
-          console.error('[auth] Backend response has invalid shape', {
-            url,
-            parsed,
-          });
           setCurrentUser(null);
           setBackendError({
             url,
@@ -229,16 +200,9 @@ export function App(): React.ReactElement {
           return;
         }
 
-        console.log('[auth] Backend /api/test succeeded', {
-          url,
-          userid: parsed.userid,
-          email: parsed.email ?? null,
-          name: parsed.name ?? null,
-        });
         setCurrentUser(parsed);
       } catch (error) {
         const message = error instanceof Error ? error.message : String(error);
-        console.error('[auth] Backend /api/test threw', { url, message });
         setCurrentUser(null);
         setBackendError({
           url,
@@ -261,7 +225,6 @@ export function App(): React.ReactElement {
     setCurrentUser(null);
     setBackendError(null);
     setAuthError(null);
-    console.log('[auth] Logged out');
   }
 
   // Initialize Google Sign-In button on mount if not logged in
@@ -283,12 +246,9 @@ export function App(): React.ReactElement {
           callback: (response) => {
             const credential = response.credential;
             if (!credential) {
-              console.error('[auth] GIS callback missing credential', { response });
               setAuthError('Google login did not return a credential.');
               return;
             }
-
-            console.log('[auth] Received Google ID token', { tokenPreview: maskToken(credential) });
 
             localStorage.setItem('google_id_token', credential);
             setIdToken(credential);
@@ -301,10 +261,8 @@ export function App(): React.ReactElement {
           text: 'signin_with',
           width: 250,
         });
-
-        console.log('[auth] Google sign-in button rendered on mount');
-      } catch (error) {
-        console.error('[auth] Failed to initialize Google button on mount', error);
+      } catch {
+        // Silent fail - Google Identity Services initialization failed
       }
     }
 
