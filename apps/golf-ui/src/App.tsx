@@ -53,9 +53,7 @@ function loadGoogleIdentityServices(): Promise<void> {
     return Promise.resolve();
   }
 
-  const existing = document.querySelector<HTMLScriptElement>(
-    `script[src="${GIS_SCRIPT_SRC}"]`
-  );
+  const existing = document.querySelector<HTMLScriptElement>(`script[src="${GIS_SCRIPT_SRC}"]`);
 
   if (existing) {
     return new Promise((resolve, reject) => {
@@ -111,8 +109,7 @@ function maskToken(token: string): string {
 }
 
 export function App(): React.ReactElement {
-  const googleClientId =
-    (import.meta.env.VITE_GOOGLE_CLIENT_ID as string | undefined) ?? '';
+  const googleClientId = (import.meta.env.VITE_GOOGLE_CLIENT_ID as string | undefined) ?? '';
 
   const [idToken, setIdToken] = React.useState<string | null>(() => {
     return localStorage.getItem('google_id_token');
@@ -269,8 +266,8 @@ export function App(): React.ReactElement {
               <h2 className="text-2xl font-semibold mb-2">Welcome</h2>
               <p className="mb-2">This is a minimal React 19 + TypeScript + Vite application.</p>
               <p className="mb-4">
-                The application is part of a monorepo and provides the frontend for the Caringbah Social
-                Golf Club management system.
+                The application is part of a monorepo and provides the frontend for the Caringbah
+                Social Golf Club management system.
               </p>
               <div className="mb-6">
                 <h3 className="text-xl font-semibold mb-2">Features:</h3>
@@ -311,7 +308,11 @@ export function App(): React.ReactElement {
 
               <p className="mt-2 text-sm text-slate-600">Calling backend: GET /api/test</p>
 
-              {isLoadingUser && <p className="mt-4" role="status">Loading user…</p>}
+              {isLoadingUser && (
+                <p className="mt-4" role="status">
+                  Loading user…
+                </p>
+              )}
 
               {currentUser && (
                 <div className="mt-4">
@@ -337,7 +338,7 @@ export function App(): React.ReactElement {
                 <div className="mt-4" role="alert">
                   <h3 className="text-xl font-semibold text-red-800">Backend call failed</h3>
                   <pre className="mt-2 whitespace-pre-wrap text-sm bg-gray-100 p-4 rounded">
-{JSON.stringify(backendError, null, 2)}
+                    {JSON.stringify(backendError, null, 2)}
                   </pre>
                 </div>
               )}
