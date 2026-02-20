@@ -5,7 +5,7 @@ import logging
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from golf_api.routes import health
+from golf_api.routes import health, test
 from golf_api.settings import settings
 
 logger = logging.getLogger(__name__)
@@ -24,3 +24,4 @@ if settings.client_origins:
     )
 
 app.include_router(health.router, prefix='/health')
+app.include_router(test.router, prefix='/api/test')

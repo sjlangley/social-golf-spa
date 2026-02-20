@@ -27,6 +27,12 @@ class Settings(BaseSettings):
         default=Environment.PRODUCTION, alias='ENVIRONMENT'
     )
 
+    client_id: str = Field(
+        ...,
+        description='The Google OAuth client ID for verifying bearer tokens.',
+        alias='GOOGLE_OAUTH_CLIENT_ID',
+    )
+
     # For CORS Policy used in CORS middleware.
 
     # FastAPI’s CORS middleware does NOT support wildcard subdomains.
