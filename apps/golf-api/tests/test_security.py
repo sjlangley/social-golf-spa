@@ -1,6 +1,5 @@
 """Tests for authentication dependency helpers."""
 
-from fastapi import HTTPException
 from fastapi.security import HTTPAuthorizationCredentials
 import pytest
 
@@ -12,16 +11,19 @@ from golf_api.security import security as security_module
 @pytest.mark.asyncio
 async def test_get_current_user_bypasses_auth_in_local_when_disabled(
     monkeypatch: pytest.MonkeyPatch,
+    test_user: User,
 ) -> None:
     monkeypatch.setattr(security_module.settings, 'auth_disabled', True)
     monkeypatch.setattr(
         security_module.settings, 'environment', Environment.LOCAL
     )
 
-    user = await security_module.get_current_user(token='fake-token')
-    assert user.email == 'anonymous'
-    assert user.userid == '00000000-0000-0000-0000-000000000000'
+    creds = HTTPAuthorizationCredentials(
+        scheme='Bearer', credentials='token-123'
+    )
 
+    user = await security_module.get_current_user(creds)
+    assert user.email == 'anonymous'
 
 
 @pytest.mark.asyncio

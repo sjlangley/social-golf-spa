@@ -50,7 +50,7 @@ async def test_verify_bearer_token_missing_sub_raises_401(
 
 
 @pytest.mark.asyncio
-async def test_verify_bearer_token_missing_email_raises_401(
+async def test_verify_bearer_token_missing_email_raises_200(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
     def fake_verify_oauth2_token(token: str, request, audience: str):  # noqa: ANN001
@@ -62,11 +62,10 @@ async def test_verify_bearer_token_missing_email_raises_401(
         fake_verify_oauth2_token,
     )
 
-    with pytest.raises(HTTPException) as exc:
-        await bearer_token_module.verify_bearer_token('token-123')
-
-    assert exc.value.status_code == 401
-    assert exc.value.detail == 'Invalid token payload'
+    user = await bearer_token_module.verify_bearer_token('token-123')
+    assert user.userid == 'user-1'
+    assert user.email is None
+    assert user.name is None
 
 
 @pytest.mark.asyncio

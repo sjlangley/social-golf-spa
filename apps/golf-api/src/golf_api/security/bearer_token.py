@@ -1,5 +1,6 @@
 """Verifies the bearer token in the Authorization header."""
 
+import asyncio
 from functools import lru_cache
 import logging
 
@@ -26,7 +27,8 @@ def get_google_request():
 async def verify_bearer_token(token: str) -> User:
     try:
         request = get_google_request()
-        payload = google_id_token.verify_oauth2_token(
+        payload = await asyncio.to_thread(
+            google_id_token.verify_oauth2_token,
             token,
             request=request,
             audience=settings.client_id,
@@ -45,7 +47,7 @@ async def verify_bearer_token(token: str) -> User:
     userid = payload.get('sub')
     email = payload.get('email')
 
-    if not userid or not email:
+    if not userid:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail='Invalid token payload',
