@@ -5,8 +5,8 @@ import pytest
 
 @pytest.mark.asyncio
 @pytest.mark.usefixtures('override_bearer_token_dependency')
-async def test_health_endpoint_overrride(async_test_client, test_user):
-    """Test that health endpoint returns a 200 OK with correct content."""
+async def test_api_test_endpoint_override(async_test_client, test_user):
+    """Test that /api/test returns a 200 OK with correct content when auth is overridden."""
     response = await async_test_client.get('/api/test')
     assert response.status_code == 200
     assert response.json() == {
