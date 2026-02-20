@@ -39,6 +39,7 @@ jobs:
             -p 8080:8080 \
             -e FIRESTORE_EMULATOR_HOST=localhost:8081 \
             -e FIRESTORE_PROJECT_ID=test-project \
+            -e GOOGLE_OAUTH_CLIENT_ID=dummy-client-id \
             golf-api:test
 
       - name: Wait for application to start and check health
