@@ -108,6 +108,30 @@ function maskToken(token: string): string {
   return `${token.slice(0, 8)}…${token.slice(-8)}`;
 }
 
+function isBackendUser(value: unknown): value is BackendUser {
+  if (typeof value !== 'object' || value === null) {
+    return false;
+  }
+
+  const obj = value as Record<string, unknown>;
+
+  // userid is required and must be a non-empty string
+  if (typeof obj.userid !== 'string' || obj.userid.trim() === '') {
+    return false;
+  }
+
+  // email and name are optional but must be string or null if present
+  if (obj.email !== undefined && obj.email !== null && typeof obj.email !== 'string') {
+    return false;
+  }
+
+  if (obj.name !== undefined && obj.name !== null && typeof obj.name !== 'string') {
+    return false;
+  }
+
+  return true;
+}
+
 export function App(): React.ReactElement {
   const googleClientId = (import.meta.env.VITE_GOOGLE_CLIENT_ID as string | undefined) ?? '';
 
@@ -170,7 +194,41 @@ export function App(): React.ReactElement {
           return;
         }
 
-        const parsed = JSON.parse(responseText) as BackendUser;
+        let parsed: unknown;
+        try {
+          parsed = JSON.parse(responseText);
+        } catch (parseError) {
+          const message = parseError instanceof Error ? parseError.message : String(parseError);
+          console.error('[auth] Failed to parse backend response as JSON', {
+            url,
+            responseText,
+            parseError: message,
+          });
+          setCurrentUser(null);
+          setBackendError({
+            url,
+            status: response.status,
+            statusText: 'Invalid JSON response',
+            responseText,
+          });
+          return;
+        }
+
+        if (!isBackendUser(parsed)) {
+          console.error('[auth] Backend response has invalid shape', {
+            url,
+            parsed,
+          });
+          setCurrentUser(null);
+          setBackendError({
+            url,
+            status: response.status,
+            statusText: 'Invalid response format',
+            responseText: 'Response missing required userid field or has invalid types',
+          });
+          return;
+        }
+
         console.log('[auth] Backend /api/test succeeded', {
           url,
           userid: parsed.userid,
