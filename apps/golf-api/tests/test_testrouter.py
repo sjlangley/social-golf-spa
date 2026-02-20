@@ -17,7 +17,7 @@ async def test_api_test_endpoint_override(async_test_client, test_user):
 
 
 @pytest.mark.asyncio
-async def test_health_endpoint(async_test_client, test_user):
+async def test_health_endpoint(async_test_client):
     """Test that health endpoint returns a 200 OK with correct content."""
     response = await async_test_client.get('/api/test')
     assert response.status_code == 401
