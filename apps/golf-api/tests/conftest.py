@@ -46,5 +46,5 @@ def override_bearer_token_dependency(test_user):
     # Ensure that the override is cleaned up after the test
     yield
 
-    # Clean up the override after the test is done
-    app.dependency_overrides.clear()
+    # Clean up the specific override after the test is done
+    app.dependency_overrides.pop(get_current_user, None)
