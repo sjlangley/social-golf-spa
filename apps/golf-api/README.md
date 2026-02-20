@@ -501,13 +501,36 @@ gcloud logging read "resource.type=cloud_run_revision AND resource.labels.servic
 
 ## Contributing
 
+### Before Committing (REQUIRED)
+
+**⚠️ All checks must pass before committing. CI will fail if you skip these steps.**
+
+Run these commands in order from `apps/golf-api/`:
+
+```bash
+# 1. Format code
+ruff format .
+
+# 2. Check linting
+ruff check .
+
+# 3. Type check
+pyright .
+
+# 4. Run tests with coverage (minimum 80% required)
+pytest --cov=src/golf_api --cov-fail-under=80 --cov-report=term-missing
+```
+
+**All checks must pass before you can commit.**
+
+### Contribution Workflow
+
 1. Create feature branch: `git checkout -b feature/description`
 2. Make changes and write tests
-3. Run linting: `ruff check src/ && ruff format src/`
-4. Run tests: `pytest --cov=golf_api`
-5. Commit: `git commit -m "feat: description"`
-6. Push: `git push origin feature/description`
-7. Create Pull Request
+3. **Run all pre-commit checks above** ⬆️
+4. Commit using conventional syntax: `git commit -m "feat: description"`
+5. Push: `git push origin feature/description`
+6. Create Pull Request
 
 See [Security Documentation](/docs/security.md) for security guidelines.
 
