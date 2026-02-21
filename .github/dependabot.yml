@@ -1,0 +1,39 @@
+# Dependabot configuration for monorepo apps
+# Documentation: https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+
+version: 2
+updates:
+  # Frontend: Node.js dependencies (golf-ui)
+  - package-ecosystem: "npm"
+    directory: "/apps/golf-ui"
+    schedule:
+      interval: "monthly"
+    open-pull-requests-limit: 5
+
+  # Backend: Python dependencies (golf-api)
+  - package-ecosystem: "pip"
+    directory: "/apps/golf-api"
+    schedule:
+      interval: "monthly"
+    open-pull-requests-limit: 5
+
+  # Handicap Calculator: Python dependencies
+  - package-ecosystem: "pip"
+    directory: "/apps/handicap-calculator"
+    schedule:
+      interval: "monthly"
+    open-pull-requests-limit: 5
+
+  # Backend: Docker (golf-api)
+  - package-ecosystem: "docker"
+    directory: "/apps/golf-api"
+    schedule:
+      interval: "monthly"
+    open-pull-requests-limit: 5
+
+  # Handicap Calculator: Docker
+  - package-ecosystem: "docker"
+    directory: "/apps/handicap-calculator"
+    schedule:
+      interval: "monthly"
+    open-pull-requests-limit: 5
