@@ -12,6 +12,7 @@ from golf_api.security import security as security_module
 async def test_get_current_user_bypasses_auth_in_local_when_disabled(
     monkeypatch: pytest.MonkeyPatch,
     test_user: User,
+    firestore_client,
 ) -> None:
     monkeypatch.setattr(security_module.settings, 'auth_disabled', True)
     monkeypatch.setattr(
@@ -22,13 +23,16 @@ async def test_get_current_user_bypasses_auth_in_local_when_disabled(
         scheme='Bearer', credentials='token-123'
     )
 
-    user = await security_module.get_current_user(creds)
+    user = await security_module.get_current_user(
+        db=firestore_client, token=creds
+    )
     assert user.email == 'anonymous'
 
 
 @pytest.mark.asyncio
 async def test_get_current_user_calls_verify_bearer_token(
     monkeypatch: pytest.MonkeyPatch,
+    firestore_client,
 ) -> None:
     monkeypatch.setattr(security_module.settings, 'auth_disabled', False)
     monkeypatch.setattr(
@@ -48,6 +52,8 @@ async def test_get_current_user_calls_verify_bearer_token(
     creds = HTTPAuthorizationCredentials(
         scheme='Bearer', credentials='token-123'
     )
-    user = await security_module.get_current_user(token=creds)
+    user = await security_module.get_current_user(
+        db=firestore_client, token=creds
+    )
 
     assert user == expected_user
