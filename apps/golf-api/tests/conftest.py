@@ -34,10 +34,12 @@ async def add_user_to_firestore(firestore_client, test_user):
     # fetches from Firestore. The auth override only bypasses the auth check,
     # it doesn't change the fact that the endpoint still needs to fetch the user
     # from Firestore.
+    user_data = test_user.model_dump()
+    user_data['__name__'] = user_data.get('userid', 'unknown')
     await (
         firestore_client.collection('users')
         .document(test_user.userid)
-        .set(test_user.model_dump())
+        .set(user_data)
     )
 
 
@@ -50,6 +52,7 @@ async def add_admin_user_to_firestore(firestore_client, test_user):
     # from Firestore.
     user_data = test_user.model_dump()
     user_data['roles'] = ['admin']
+    user_data['__name__'] = user_data.get('userid', 'unknown')
     await (
         firestore_client.collection('users')
         .document(test_user.userid)

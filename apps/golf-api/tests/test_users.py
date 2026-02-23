@@ -14,11 +14,13 @@ async def test_get_user(async_test_client, test_user):
     response = await async_test_client.get('/api/v1/users/')
     assert response.status_code == 200
     data = response.json()
-    assert isinstance(data, list)
-    assert len(data) == 1
-    assert data[0]['email'] == test_user.email
-    assert data[0]['userid'] == test_user.userid
-    assert data[0]['name'] == test_user.name
+    items = data.get('items')
+    assert items is not None
+    assert isinstance(items, list)
+    assert len(items) == 1
+    assert items[0]['email'] == test_user.email
+    assert items[0]['userid'] == test_user.userid
+    assert items[0]['name'] == test_user.name
 
 
 @pytest.mark.asyncio

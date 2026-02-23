@@ -1,6 +1,14 @@
 """An authenticated user."""
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator
+from typing import Any
+
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    Field,
+    field_validator,
+    model_validator,
+)
 
 
 def validate_name_colon_value_keys(d: dict[str, bool]) -> dict[str, bool]:
@@ -55,3 +63,14 @@ class User(BaseModel):
             'Permissions must be a dictionary with keys in the format '
             '"name:value"'
         )
+
+    @model_validator(mode='before')
+    @classmethod
+    def handle_deprecated_fields(cls, values: Any) -> Any:
+        """Remove __name__ that is used in testing."""
+
+        if isinstance(values, dict):
+            if '__name__' in values:
+                values.pop('__name__')
+
+        return values
