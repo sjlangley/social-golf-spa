@@ -1,10 +1,12 @@
 from fastapi import APIRouter, Depends, Query
+from google.cloud import firestore
 
 from golf_api.constants import DEFAULT_GET_LIMIT, MAX_GET_LIMIT, CollectionNames
 from golf_api.models.user import User
 from golf_api.permissions import UserPermissions
 from golf_api.security.permissions import require_scoped_permission
 from golf_api.utils.firestore import FirestoreDB
+from golf_api.utils.firestore_pagination import Page, paginate_next_async
 
 router = APIRouter(tags=['users'])
 
@@ -19,13 +21,12 @@ async def list_users(
         description='Number of users to return',
     ),
     _=Depends(require_scoped_permission(UserPermissions.READ)),
-) -> list[User]:
+) -> Page[User]:
     """List all users."""
-    collection = db.collection(CollectionNames.USERS)
-    query = collection.limit(limit)
-    items: list[User] = []
-    async for doc in query.stream():
-        data = doc.to_dict()
-        if data:
-            items.append(User(**data))
-    return items
+    return await paginate_next_async(
+        db=db,
+        query=db.collection(CollectionNames.USERS),
+        order_by=[('userid', firestore.Query.ASCENDING)],
+        page_size=limit,
+        model=User,
+    )
