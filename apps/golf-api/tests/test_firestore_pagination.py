@@ -53,6 +53,23 @@ async def test_encode_decode_cursor_with_datetime():
 
 
 @pytest.mark.asyncio
+async def test_paginate_no_order(firestore_client):
+    """Test pagination on an empty collection."""
+    collection = firestore_client.collection('empty_posts')
+
+    with pytest.raises(
+        ValueError, match='order_by must have at least one field'
+    ):
+        await paginate_next_async(
+            db=firestore_client,
+            query=collection,
+            order_by=[],
+            page_size=10,
+            model=PostModel,
+        )
+
+
+@pytest.mark.asyncio
 async def test_paginate_empty_collection(firestore_client):
     """Test pagination on an empty collection."""
     collection = firestore_client.collection('empty_posts')

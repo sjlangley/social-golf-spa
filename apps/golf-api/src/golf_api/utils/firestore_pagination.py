@@ -80,6 +80,9 @@ async def paginate_next_async(
     if page_size < 1 or page_size > MAX_GET_LIMIT:
         raise ValueError(f'page_size must be between 1 and {MAX_GET_LIMIT}')
 
+    if not order_by:
+        raise ValueError('order_by must have at least one field')
+
     q = query
 
     # Apply ordering
