@@ -51,12 +51,12 @@ def decode_cursor(cursor):
 
 async def paginate_next_async(
     *,
-    db,
-    query,
-    order_by,
-    page_size,
+    db: firestore.AsyncClient,
+    query: firestore.Query,
+    order_by: list,
+    page_size: int,
     model: Type[T],
-    cursor=None,
+    cursor: str | None = None,
 ) -> Page[T]:
     """
     Generic forward-only Firestore cursor pagination.
