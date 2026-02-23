@@ -1,7 +1,6 @@
 """User roles for authentication and authorization."""
 
 import logging
-from typing import Set
 
 from golf_api.models.user import User
 from golf_api.permissions import Roles, UserPermissions
@@ -49,7 +48,7 @@ def expand_roles(
     return expanded
 
 
-def get_effective_permissions(user: User) -> Set[str]:
+def get_effective_permissions(user: User) -> set[str]:
     """
     Merge permissions from:
     - All roles (with hierarchy)
@@ -58,9 +57,11 @@ def get_effective_permissions(user: User) -> Set[str]:
     roles = expand_roles(user.roles, ROLE_HIERARCHY)
 
     # Start with role-based permissions
-    effective = set()
+    effective: set[str] = set()
     for role in roles:
-        effective.update(ROLE_PERMISSIONS.get(role, set()))
+        permissions = ROLE_PERMISSIONS.get(role, set())
+        if permissions:
+            effective.update(permissions)
 
     # Apply user-specific permission overrides
     overrides = user.permissions

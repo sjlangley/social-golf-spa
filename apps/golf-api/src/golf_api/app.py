@@ -2,6 +2,7 @@
 
 from contextlib import asynccontextmanager
 import logging
+from typing import Any
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -17,7 +18,7 @@ logger = logging.getLogger(__name__)
 async def lifespan(application: FastAPI):
     """Lifespan context manager for the application."""
     # Initialize Firestore client
-    client_kwargs = {}
+    client_kwargs: dict[str, Any] = {}
 
     # Set project ID if provided
     if settings.firestore_project_id:

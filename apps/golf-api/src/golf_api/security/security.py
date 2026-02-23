@@ -53,9 +53,10 @@ async def get_current_user(
     doc = await doc_ref.get()
     if doc.exists:
         data = doc.to_dict()
-        if data.get('roles'):
-            user.roles = data['roles']
-        if data.get('permissions'):
-            user.permissions = data['permissions']
+        if data:
+            if data.get('roles'):
+                user.roles = data['roles']
+            if data.get('permissions'):
+                user.permissions = data['permissions']
 
     return user
