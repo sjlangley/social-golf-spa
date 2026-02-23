@@ -19,8 +19,8 @@ ROLE_HIERARCHY: dict[Roles, set[Roles]] = {
 # Fine grained role permissions. Permissions get expanded based on the user
 # roles and the role hierarchy.
 ROLE_PERMISSIONS = {
-    Roles.READER: set(),
-    Roles.WRITER: set(),
+    Roles.READER: {UserPermissions.READ},
+    Roles.WRITER: {UserPermissions.CREATE, UserPermissions.EDIT},
     Roles.ADMIN: {
         UserPermissions.ALL,
     },
