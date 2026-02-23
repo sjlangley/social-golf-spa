@@ -117,21 +117,23 @@ async def paginate_next_async(
         q = q.start_after(cursor_values)
 
     items: list[T] = []
-    last_doc = None
-    last_data = None
+    docs_data: list[tuple] = []  # Store (doc, data) pairs
 
-    # Stream results
-    async for doc in q.limit(page_size).stream():
+    # Fetch page_size + 1 to check if there are more items
+    async for doc in q.limit(page_size + 1).stream():
         data = doc.to_dict() or {}
         items.append(model.model_validate(data))
-        last_doc = doc
-        last_data = data
+        docs_data.append((doc, data))
 
-    # Build next cursor
+    # Build next cursor only if there are more items beyond the current page
     next_cursor = None
+    has_more = len(items) > page_size
 
-    if last_doc:
-        assert last_data is not None  # help type checkers
+    if has_more:
+        # Remove the extra item
+        items = items[:page_size]
+        # Use the last item we're returning to build the cursor
+        last_doc, last_data = docs_data[page_size - 1]
 
         payload = {}
 

@@ -92,7 +92,9 @@ async def test_paginate_single_page(firestore_client):
     )
 
     assert len(result.items) == 3
-    assert result.next_cursor is not None  # Cursor exists even on last page
+    assert (
+        result.next_cursor is None
+    )  # No cursor when all items fit on one page
     # Check descending order
     assert result.items[0].title == 'Post 2'
     assert result.items[1].title == 'Post 1'

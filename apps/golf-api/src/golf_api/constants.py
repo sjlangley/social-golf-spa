@@ -6,6 +6,13 @@ DEFAULT_GET_LIMIT = 50
 MAX_GET_LIMIT = 100
 
 
+class SortDirection(StrEnum):
+    """Enum for the sort directions."""
+
+    ASC = 'asc'
+    DESC = 'desc'
+
+
 class CollectionNames(StrEnum):
     """Firestore collection names."""
 
