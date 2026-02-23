@@ -41,5 +41,17 @@ class Settings(BaseSettings):
         default_factory=list, alias='CLIENT_ORIGINS'
     )
 
+    # Google Cloud project ID for Firestore
+    firestore_project_id: str | None = Field(
+        default=None, alias='FIRESTORE_PROJECT_ID'
+    )
+
+    # Firestore emulator host (e.g., "localhost:8080")
+    # When set, the Firestore client will connect to the emulator instead of
+    # production
+    firestore_emulator_host: str | None = Field(
+        default=None, alias='FIRESTORE_EMULATOR_HOST'
+    )
+
 
 settings = Settings()  # pyrefly: ignore[missing-argument]
