@@ -11,7 +11,7 @@ router = APIRouter(tags=['users'])
 
 @router.get('/', response_description='List all users')
 async def list_users(
-    db: FirestoreDB,
+    db: FirestoreDB,  # type: ignore[valid-type]
     limit: int = Query(
         DEFAULT_GET_LIMIT,
         ge=1,
