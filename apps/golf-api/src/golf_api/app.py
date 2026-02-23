@@ -26,10 +26,13 @@ async def lifespan(application: FastAPI):
 
     # Use Firestore emulator if configured
     if settings.firestore_emulator_host:
-        os.environ['FIRESTORE_EMULATOR_HOST'] = settings.firestore_emulator_host
         logger.info(
             'Using Firestore emulator at %s', settings.firestore_emulator_host
         )
+        # Use client_options to connect to the emulator, avoiding os.environ
+        client_kwargs['client_options'] = {
+            'api_endpoint': settings.firestore_emulator_host
+        }
         # Emulator requires a project ID, use a dummy one if not provided
         if 'project' not in client_kwargs:
             client_kwargs['project'] = 'emulator-project'
