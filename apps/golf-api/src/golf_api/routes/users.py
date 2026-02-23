@@ -1,6 +1,7 @@
 from enum import StrEnum
 
 from fastapi import APIRouter, Depends, Query
+from google.cloud.firestore_v1.field_path import FieldPath
 
 from golf_api.constants import (
     DEFAULT_GET_LIMIT,
@@ -40,6 +41,10 @@ async def list_users(
         SortDirection.ASC,
         description='Sort direction (asc, desc)',
     ),
+    next_cursor: str | None = Query(
+        None,
+        description='Cursor for pagination (from previous response)',
+    ),
     _=Depends(require_scoped_permission(UserPermissions.READ)),
 ) -> Page[User]:
     """List all users."""
@@ -47,7 +52,11 @@ async def list_users(
         db=db,
         # pyrefly: ignore [bad-argument-type]
         query=db.collection(CollectionNames.USERS),
-        order_by=[(sort_by.value, sort_direction.value)],
+        order_by=[
+            (sort_by.value, sort_direction.value),
+            (FieldPath.document_id(), SortDirection.ASC),
+        ],
         page_size=limit,
         model=User,
+        cursor=next_cursor,
     )
