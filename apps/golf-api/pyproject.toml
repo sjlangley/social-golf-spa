@@ -17,7 +17,7 @@ dependencies = [
     "google-cloud-logging==3.13.0",
     "gunicorn==25.1.0",
     "pydantic==2.12.5",
-    "pydantic-settings==2.13.0",
+    "pydantic-settings==2.13.1",
     "uvicorn==0.41.0",
 ]
 authors = [
