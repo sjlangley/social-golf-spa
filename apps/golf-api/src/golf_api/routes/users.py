@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, Query, Request
+from fastapi import APIRouter, Depends, Query
 
 from golf_api.constants import DEFAULT_GET_LIMIT, MAX_GET_LIMIT, CollectionNames
 from golf_api.models.user import User
