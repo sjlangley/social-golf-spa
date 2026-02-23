@@ -40,7 +40,7 @@ class User(BaseModel):
     )
 
     # Fine grained permissions associated with the user, for example:
-    # ['part:read': True, 'part:write': False]
+    # {'part:read': True, 'part:write': False}
     permissions: dict[str, bool] = Field(
         default={},
         json_schema_extra={'example': {'part:read': True, 'part:write': False}},
