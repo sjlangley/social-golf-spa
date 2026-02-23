@@ -26,7 +26,7 @@ async def list_users(
     return await paginate_next_async(
         db=db,
         query=db.collection(CollectionNames.USERS),
-        order_by=[('userid', firestore.Query.ASCENDING)],
+        order_by=[('userid', 'asc'), ('__name__', 'asc')],
         page_size=limit,
         model=User,
     )
