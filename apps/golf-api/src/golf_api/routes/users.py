@@ -45,6 +45,7 @@ async def list_users(
     """List all users."""
     return await paginate_next_async(
         db=db,
+        # pyrefly: ignore [bad-argument-type]
         query=db.collection(CollectionNames.USERS),
         order_by=[(sort_by.value, sort_direction.value)],
         page_size=limit,

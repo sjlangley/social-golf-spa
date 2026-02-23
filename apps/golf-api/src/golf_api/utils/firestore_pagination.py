@@ -110,6 +110,7 @@ async def paginate_next_async(
 
             if field == '__name__':
                 # convert stored document path string back to DocumentReference
+                # pyrefly: ignore [bad-argument-type]
                 value = db.document(value)
 
             cursor_values.append(value)
@@ -120,6 +121,7 @@ async def paginate_next_async(
     docs_data: list[tuple] = []  # Store (doc, data) pairs
 
     # Fetch page_size + 1 to check if there are more items
+    # pyrefly: ignore [not-iterable]
     async for doc in q.limit(page_size + 1).stream():
         data = doc.to_dict() or {}
         items.append(model.model_validate(data))
