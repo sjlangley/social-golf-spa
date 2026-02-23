@@ -88,7 +88,7 @@ async def paginate_next_async(
             field,
             direction=(
                 firestore.Query.ASCENDING
-                if direction == 'asc'
+                if direction in ('asc', firestore.Query.ASCENDING)
                 else firestore.Query.DESCENDING
             ),
         )
