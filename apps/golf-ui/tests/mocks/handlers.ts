@@ -3,7 +3,7 @@ import { http, HttpResponse } from 'msw';
 // Default base URL for API (can be overridden by VITE_API_BASE_URL env var)
 const getApiUrl = (path: string) => {
   const baseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
-  return `${baseUrl}${path}`;
+  return new URL(path, baseUrl).toString();
 };
 
 export const handlers = [
