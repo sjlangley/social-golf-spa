@@ -32,3 +32,21 @@ async def test_get_user_not_authorized(
     """
     response = await async_test_client.get('/api/v1/users/')
     assert response.status_code == 401
+
+
+@pytest.mark.asyncio
+@pytest.mark.usefixtures(
+    'override_bearer_token_dependency', 'add_user_to_firestore'
+)
+async def test_get_current_user(
+    async_test_client, test_user
+):
+    """Test that /api/v1/users/current returns a 200 OK with correct content
+    when auth is overridden.
+    """
+    response = await async_test_client.get('/api/v1/users/current')
+    assert response.status_code == 200
+    data = response.json()
+    assert data['email'] == test_user.email
+    assert data['userid'] == test_user.userid
+    assert data['name'] == test_user.name
