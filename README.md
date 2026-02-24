@@ -6,6 +6,20 @@ A modern golf club management system for tracking members, scores, matches, hand
 
 [![CI](https://github.com/sjlangley/csocgolf-v2/actions/workflows/ci.yml/badge.svg)](https://github.com/sjlangley/csocgolf-v2/actions/workflows/ci.yml)
 
+---
+
+## ⚠️ CRITICAL FOR CONTRIBUTORS ⚠️
+
+**BEFORE COMMITTING ANY CODE CHANGES:**
+1. Navigate to the correct service directory (cd apps/golf-api, cd apps/golf-ui, or cd apps/handicap-calculator)
+2. Run ALL format, lint, type checking, and test commands (see [Before Committing](#before-committing) section)
+3. Fix ALL errors until all checks pass
+4. Only then commit your changes
+
+**This is MANDATORY. CI will fail otherwise.**
+
+---
+
 ## What This Application Does
 
 This system helps our golf club:
@@ -345,23 +359,65 @@ See [docs/architecture.md](docs/architecture.md) for detailed deployment instruc
 
 ### Before Committing
 
-**All code changes must meet these requirements before they can be committed to the repository:**
+**⚠️ CRITICAL - ALL CODE CHANGES MUST MEET THESE REQUIREMENTS BEFORE COMMITTING ⚠️**
 
-1. **Linting & Formatting**
+**This is NOT a suggestion. This is a MANDATORY requirement. Skipping these checks will cause CI to fail.**
+
+#### Required Checks (Must Run ALL Before Committing)
+
+**1. Linting & Formatting (MANDATORY)**
    - Python: `ruff check . && ruff format .` (apps/golf-api, apps/handicap-calculator)
    - TypeScript: `npm run lint && npm run format` (apps/golf-ui)
    - All style issues must be resolved (Google Style Guide)
    - See [Code Style & Linting](#code-style--linting) section above
 
-2. **Type Checking**
+**2. Type Checking (MANDATORY)**
    - Python: `pyright .` must pass with no errors (apps/golf-api, apps/handicap-calculator)
    - TypeScript: Full TypeScript (no `any` types without justification, verified via eslint)
 
-3. **Tests**
+**3. Tests (MANDATORY)**
    - Python: `pytest --cov=app --cov-fail-under=80` (apps/golf-api, apps/handicap-calculator)
    - TypeScript: `npm run test:ci` (apps/golf-ui)
    - **Minimum 80% test coverage required** across all services
    - All tests must pass before committing
+
+#### Complete Pre-Commit Command Examples
+
+**For Backend Changes (apps/golf-api):**
+```bash
+cd apps/golf-api
+ruff format .
+ruff check .
+pyright .
+pytest --cov=src/golf_api --cov-fail-under=80
+# ALL commands must pass before committing
+```
+
+**For Backend Changes (apps/handicap-calculator):**
+```bash
+cd apps/handicap-calculator
+ruff format .
+ruff check .
+pyright .
+pytest --cov=src/handicap_calculator --cov-fail-under=80
+# ALL commands must pass before committing
+```
+
+**For Frontend Changes (apps/golf-ui):**
+```bash
+cd apps/golf-ui
+npm run lint
+npm run format:check  # Or npm run format to auto-fix
+npm test
+# ALL commands must pass before committing
+```
+
+**⚠️ CRITICAL REMINDERS:**
+- Run checks in the correct directory (cd to the service you modified)
+- Run ALL checks, not just some of them
+- Fix all errors before committing
+- Never commit with failing checks
+- Never skip checks to save time
 
 ### Workflow
 
@@ -372,24 +428,35 @@ See [docs/architecture.md](docs/architecture.md) for detailed deployment instruc
 
 2. Make your changes following [.github/copilot-instructions.md](.github/copilot-instructions.md)
 
-3. **Complete all lint, type, format, and test runs:**
+3. **⚠️ MANDATORY: Run ALL pre-commit checks in the service directory:**
+
+   **Backend example (apps/golf-api):**
    ```bash
-   # Backend example
    cd apps/golf-api
-   ruff check . && ruff format .
-   pyright .
-   pytest --cov=src/golf_api --cov-fail-under=80
+   ruff format .                           # Format
+   ruff check .                            # Lint
+   pyright .                               # Type check
+   pytest --cov=src/golf_api --cov-fail-under=80  # Test
    ```
 
+   **Backend example (apps/handicap-calculator):**
    ```bash
-   # Frontend example
-   cd apps/golf-ui
-   npm run lint
-   npm run format:check  # Or npm run format to auto-fix
-   npm test
+   cd apps/handicap-calculator
+   ruff format .                           # Format
+   ruff check .                            # Lint
+   pyright .                               # Type check
+   pytest --cov=src/handicap_calculator --cov-fail-under=80  # Test
    ```
 
-   **⚠️ CRITICAL: Never commit without running these checks. CI will fail otherwise.**
+   **Frontend example (apps/golf-ui):**
+   ```bash
+   cd apps/golf-ui
+   npm run lint                            # Lint
+   npm run format:check                    # Check format (or npm run format to auto-fix)
+   npm test                                # Test
+   ```
+
+   **🚨 CRITICAL: ALL checks must pass with NO ERRORS before committing. This is NOT optional. CI will fail if you skip these checks.**
 
 4. **Use conventional commit syntax:**
    ```
