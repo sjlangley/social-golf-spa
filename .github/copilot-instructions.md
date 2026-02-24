@@ -730,9 +730,9 @@ cd apps/golf-api  # OR cd apps/handicap-calculator
 ruff format .                              # 1. Format code
 ruff check .                               # 2. Lint code
 pyright .                                  # 3. Type check
-pytest --cov=src/golf_api --cov-fail-under=80  # 4. Test with 80% coverage (for golf-api)
+pytest --cov=golf_api --cov-fail-under=80  # 4. Test with 80% coverage (for golf-api)
 # OR for handicap-calculator:
-# pytest --cov=src/handicap_calculator --cov-fail-under=80
+# pytest --cov=handicap_calculator --cov-fail-under=80
 ```
 
 **ALL commands must pass with no errors before committing.**

@@ -389,7 +389,7 @@ cd apps/golf-api
 ruff format .
 ruff check .
 pyright .
-pytest --cov=src/golf_api --cov-fail-under=80
+pytest --cov=golf_api --cov-fail-under=80
 # ALL commands must pass before committing
 ```
 
@@ -399,7 +399,7 @@ cd apps/handicap-calculator
 ruff format .
 ruff check .
 pyright .
-pytest --cov=src/handicap_calculator --cov-fail-under=80
+pytest --cov=handicap_calculator --cov-fail-under=80
 # ALL commands must pass before committing
 ```
 
@@ -436,7 +436,7 @@ npm test
    ruff format .                           # Format
    ruff check .                            # Lint
    pyright .                               # Type check
-   pytest --cov=src/golf_api --cov-fail-under=80  # Test
+   pytest --cov=golf_api --cov-fail-under=80  # Test
    ```
 
    **Backend example (apps/handicap-calculator):**
@@ -445,7 +445,7 @@ npm test
    ruff format .                           # Format
    ruff check .                            # Lint
    pyright .                               # Type check
-   pytest --cov=src/handicap_calculator --cov-fail-under=80  # Test
+   pytest --cov=handicap_calculator --cov-fail-under=80  # Test
    ```
 
    **Frontend example (apps/golf-ui):**
