@@ -2,6 +2,23 @@
 
 Project-specific guidance for GitHub Copilot when working on the Caringbah Social Golf Club management system.
 
+---
+
+## 🚨 CRITICAL: MANDATORY PRE-COMMIT REQUIREMENTS 🚨
+
+**BEFORE COMMITTING ANY CODE CHANGES, YOU MUST:**
+
+1. **Navigate to the correct service directory** (cd apps/golf-api, cd apps/golf-ui, or cd apps/handicap-calculator)
+2. **Run ALL format/lint/type/test commands** for that service
+3. **Fix all errors** until all checks pass
+4. **Only then commit** your changes
+
+**This is NOT optional. CI will fail if you skip these checks.**
+
+See the [MANDATORY PRE-COMMIT CHECKLIST](#-mandatory-pre-commit-checklist-) section below for exact commands.
+
+---
+
 ## Stack Summary
 
 **Frontend:**
@@ -691,26 +708,59 @@ If you encounter any of these situations, **stop and ask for clarification**:
 
 **Don't guess or assume** - ping the team for clarification. It's faster than refactoring later.
 
-## Pre-Commit Checklist (MANDATORY)
+## ⛔ MANDATORY PRE-COMMIT CHECKLIST ⛔
 
-**⚠️ CRITICAL: Always run these checks before committing code. CI will fail otherwise.**
+**🚨 CRITICAL - READ THIS BEFORE MAKING ANY COMMITS 🚨**
+
+**YOU MUST RUN ALL FORMAT, LINT, TYPE CHECK, AND TEST COMMANDS BEFORE COMMITTING ANY CODE CHANGES.**
+
+**This is NOT optional. This is NOT a suggestion. This is a MANDATORY requirement.**
+
+Failure to run these checks will cause CI to fail and your changes will be rejected.
 
 ### Backend (Python - apps/golf-api or apps/handicap-calculator)
+
+**Navigate to the service directory first:**
 ```bash
-ruff format .                              # Format code
-ruff check .                               # Lint code
-pyright .                                  # Type check
-pytest --cov=src/[package] --cov-fail-under=80  # Test with 80% coverage
+cd apps/golf-api  # OR cd apps/handicap-calculator
 ```
+
+**Then run ALL of these commands in order:**
+```bash
+ruff format .                              # 1. Format code
+ruff check .                               # 2. Lint code
+pyright .                                  # 3. Type check
+pytest --cov=golf_api --cov-fail-under=80  # 4. Test with 80% coverage (for golf-api)
+# OR for handicap-calculator:
+# pytest --cov=handicap_calculator --cov-fail-under=80
+```
+
+**ALL commands must pass with no errors before committing.**
 
 ### Frontend (TypeScript - apps/golf-ui)
+
+**Navigate to the service directory first:**
 ```bash
-npm run lint                               # Lint code
-npm run format:check                       # Check formatting (or npm run format to fix)
-npm test                                   # Run tests
+cd apps/golf-ui
 ```
 
-**Never commit code without passing all checks. This is not optional.**
+**Then run ALL of these commands in order:**
+```bash
+npm run lint                               # 1. Lint code
+npm run format:check                       # 2. Check formatting (use npm run format to auto-fix)
+npm test                                   # 3. Run tests
+```
+
+**ALL commands must pass with no errors before committing.**
+
+### ⚠️ CRITICAL REMINDERS
+
+1. **ALWAYS** run checks in the correct service directory (cd apps/golf-api, cd apps/golf-ui, etc.)
+2. **ALWAYS** run ALL checks, not just some of them
+3. **ALWAYS** fix all errors before committing
+4. **NEVER** commit code with failing checks
+5. **NEVER** skip these checks to save time - they are mandatory
+6. If checks fail, fix the issues and re-run the checks until they all pass
 
 ## Code Review Standards
 
