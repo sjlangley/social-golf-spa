@@ -6,7 +6,7 @@ import { server } from './mocks/server';
 
 // Helper to get API URL (matches App.tsx logic)
 function getApiUrl(pathname: string): string {
-  const baseUrl = (import.meta.env.VITE_API_BASE_URL as string | undefined) ?? '';
+  const baseUrl = (import.meta.env.VITE_API_BASE_URL as string | undefined) ?? 'http://localhost:8000';
   return new URL(pathname, baseUrl).toString();
 }
 
