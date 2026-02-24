@@ -153,7 +153,7 @@ describe('App - API Integration', () => {
         http.get(getApiUrl('/api/v1/users/current'), () => {
           return new HttpResponse('Not valid JSON{', {
             status: 200,
-            headers: { 'Content-Type': 'application/json' }
+            headers: { 'Content-Type': 'application/json' },
           });
         })
       );
@@ -211,7 +211,7 @@ describe('App - API Integration', () => {
       server.use(
         http.get(getApiUrl('/api/v1/users/current'), () => {
           return HttpResponse.json({
-            userid: '',  // Empty string
+            userid: '', // Empty string
             email: 'test@example.com',
             name: 'Test User',
           });
