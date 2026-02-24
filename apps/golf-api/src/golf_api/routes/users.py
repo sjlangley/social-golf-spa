@@ -60,3 +60,10 @@ async def list_users(
         model=User,
         cursor=next_cursor,
     )
+
+
+@router.get('/current', response_description='Get current user')
+async def get_current_user(
+    user: User = Depends(require_scoped_permission(UserPermissions.READ)),
+) -> User:
+    return user

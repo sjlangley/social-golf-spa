@@ -147,7 +147,7 @@ export function App(): React.ReactElement {
 
     const token = idToken;
 
-    const url = getApiUrl('/api/test');
+    const url = getApiUrl('/api/v1/users/current');
     const controller = new AbortController();
 
     async function fetchCurrentUser() {
