@@ -41,8 +41,8 @@ async def test_get_user_not_authorized(
 async def test_get_current_user(
     async_test_client, test_user
 ):
-    """Test that /api/test returns a 401 Unauthorized when auth is not
-    overridden.
+    """Test that /api/v1/users/current returns a 200 OK with correct content
+    when auth is overridden.
     """
     response = await async_test_client.get('/api/v1/users/current')
     assert response.status_code == 200
