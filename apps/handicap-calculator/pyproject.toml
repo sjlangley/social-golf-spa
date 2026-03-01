@@ -9,7 +9,7 @@ description = "Push subscriber for score events to update handicaps."
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "async-lru==2.1.0",
+    "async-lru==2.2.0",
     "fastapi==0.131.0",
     "google-cloud-firestore==2.23.0",
     "google-cloud-logging==3.13.0",
