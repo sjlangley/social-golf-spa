@@ -34,7 +34,7 @@ classifiers = [
 [project.optional-dependencies]
 dev = [
     "asgi-lifespan==2.1.0",
-    "fake-firestore==0.12.1",
+    "fake-firestore==0.13.1",
     "httpx>=0.28.1,<1.0.0",
     "pyrefly==0.60.0",
     "pytest==9.0.2",
